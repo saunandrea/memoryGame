@@ -1,16 +1,18 @@
 /*
  * Create a list that holds all of your cards
  */
-let cards = [
-"fa-bug","fa-bug",
-"fa-leaf","fa-leaf",
-"fa-diamond","fa-diamond",
-"fa-heart","fa-heart",
-"fa-hand-peace-o","fa-hand-peace-o",
-"fa-magic","fa-magic",
-"fa-motorcycle","fa-motorcycle",
-"fa-sun-o","fa-sun-o"
+const cards = [
+    "fa-bug", "fa-bug",
+    "fa-leaf", "fa-leaf",
+    "fa-diamond", "fa-diamond",
+    "fa-heart", "fa-heart",
+    "fa-hand-peace-o", "fa-hand-peace-o",
+    "fa-magic", "fa-magic",
+    "fa-motorcycle", "fa-motorcycle",
+    "fa-sun-o", "fa-sun-o"
 ];
+
+let openCard = null;
 
 /*
  * Display the cards on the page
@@ -21,10 +23,9 @@ let cards = [
 function setCards(cardArray) {
     let shuffled = shuffle(cardArray);
     let deck = document.getElementsByClassName("deck")[0];
-    for (let fa of shuffled){
+    for (let fa of shuffled) {
         let li = document.createElement("li");
-        //li.classList.add("fa", fa);
-        li.classList.add("card", "match");
+        li.classList.add("card");
         let i = document.createElement("i");
         i.classList.add("fa", fa);
         li.appendChild(i);
@@ -47,14 +48,42 @@ function shuffle(array) {
     return array;
 }
 
+function setupEvents() {
+    document.getElementsByClassName("deck")[0].addEventListener("click", function (e) {
+        // e.target is the clicked element!
+        // If it was a list item
+        if (e.target && e.target.nodeName == "LI" && !e.target.classList.contains("open") && !e.target.classList.contains("match")) {
+            // List item found!  Output the ID!
+            let iconElement = e.target.firstChild;
+            e.target.classList.add("open");
+            console.log("List item ", iconElement.classList, " was clicked!");
+            let iconClass;
+            for (let c of iconElement.classList) {
+                if (c.indexOf('fa-') > -1) {
+                    iconClass = c;
+                }
+            }
+            if (openCard) {
+                if (openCard.firstChild.classList.contains(iconClass)) {
+                    console.log("it's a match");
+                    e.target.classList.toggle("match");
+                    openCard.classList.toggle("match");
+                    e.target.classList.toggle("open");
+                    openCard.classList.toggle("open");
+                    openCard = null;
+                } else {
+                    console.log("not looking good");
+                    e.target.classList.toggle("open");
+                    openCard.classList.toggle("open");
+                    openCard = null;
+                }
+
+            } else {
+                openCard = e.target;
+            }
+        }
+    });
+}
+
 setCards(cards);
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+setupEvents();
