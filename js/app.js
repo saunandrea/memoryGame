@@ -20,12 +20,35 @@ const moves = document.getElementsByClassName("moves")[0];
 let startDate;
 var timer; 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+////////////// >>>>>>>>> timer test
+var startTimer = function(){
+    console.log("Start");
+    startDate = new Date().getTime();
+    begin = setInterval(countdown, 1000); // Call countdown function every 1000 milliseconds
+}
+
+var stopTimer = function(){
+	console.log("Stop");
+	window.clearInterval(begin) // clear the timer and so stop the clock
+}
+
+var resetTimer = function(){
+	console.log("Reset");
+	window.clearInterval(begin) // clear the timer and so stop the clock
+    document.getElementById("timer").innerHTML = "0m 0s ";
+}
+
+var countdown = function(){
+    var now = new Date().getTime();
+    var distance =  now - startDate;
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+}
+
+
+//////<<<<<<<<<<<<<< timer test
+
 function setCards(cardArray) {
     let shuffled = shuffle(cardArray);
     let deck = document.getElementsByClassName("deck")[0];
@@ -75,6 +98,7 @@ function checkifCardsMatch(lastClicked) {
             matchCounter++;
             if (matchCounter == 8) {
                 console.log("you woooonnn!!!!");
+                stopTimer();
                 resetGame();
                 return;
             }
@@ -88,24 +112,10 @@ function checkifCardsMatch(lastClicked) {
     } else {
         if(attempts == 0 ){
             console.log("want timer to start");
-            startDate = new Date().getTime();
-            timer = window.setInterval(function () {
-                var now = new Date().getTime();
-                var distance =  now - startDate;
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
-            }, 1000);
+            startTimer();
         }
         openCard = lastClicked;
     }
-
-    /*     if (!timeoutComplete) {
-            setTimeout(function () {
-                timeoutComplete = true;
-            }, 1000)
-        } */
-
 }
 
 function setAttempts(newVal) {
@@ -120,21 +130,19 @@ function setAttempts(newVal) {
 }
 
 function resetGame() {
-    window.clearInterval(timer);
-    timer = null; //todo: for some reason timer not starting again after a reset
-    document.getElementById("timer").innerHTML = "0m 0s ";
+    resetTimer();
     matchCounter = 0;
     setAttempts(0);
-    //todo: store a variable with this list so not looking up so much 
-    document.getElementsByClassName("stars")[0].children[0].style.display = "inline";
+    openCard = null;
+
+    document.getElementsByClassName("stars")[0].children[0].style.display = "inline";     //todo: store a variable with this list so not looking up so much 
     document.getElementsByClassName("stars")[0].children[2].style.display = "inline";
-    //todo: ideally would like to sub out the classes but can optimize in a rev 2 vs deleting and readding
-    let deck = document.getElementsByClassName("deck")[0];
+
+    let deck = document.getElementsByClassName("deck")[0];     //todo: ideally would like to sub out the classes but can optimize in a rev 2 vs deleting and readding
     while (deck.firstChild) {
         deck.removeChild(deck.firstChild);
     }
     setCards(cards);
-
 }
 
 function setupEvents() {
