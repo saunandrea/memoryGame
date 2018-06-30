@@ -22,7 +22,6 @@ var timer;
 var minutes;
 var seconds; 
 
-////////////// >>>>>>>>> timer test
 var startTimer = function(){
     console.log("Start");
     startDate = new Date().getTime();
@@ -47,8 +46,6 @@ var countdown = function(){
     seconds = Math.floor((distance % (1000 * 60)) / 1000);
     document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 }
-
-//////<<<<<<<<<<<<<< timer test
 
 document.getElementById('resetButton').addEventListener('click', function() {
       document.getElementsByClassName("modal-container")[0].style.display = 'none';
@@ -167,7 +164,7 @@ function setupEvents() {
         if (target.nodeName == "I") {
             target = target.parentNode;
         }
-        if (target && (target.nodeName == "LI") && !target.classList.contains("open")) {  //(timeoutComplete || !openCard) &&
+        if (target && (target.nodeName == "LI") && !target.classList.contains("open")) { 
             target.classList.add("open");
             setTimeout(function () {
                 checkifCardsMatch(target);

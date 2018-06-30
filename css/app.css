@@ -18,7 +18,7 @@ body {
 
 body {
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    font-family: 'Coda', cursive;
+    font-family: 'Raleway', sans-serif;
 }
 
 .container {
@@ -29,7 +29,7 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 300;
 }
 
@@ -127,17 +127,20 @@ h1 {
   }
 
 .modal {
-    font-family: Raleway;
+    font-family: 'Raleway', sans-serif;
     text-align: center;
-    background-color: hsla(30, 12%, 23%, 0.95);
-    color: white;
+    background-color:  #2e3d49;
+    color: #aa7ecd; 
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     font-size: 1em;
     height: 100%;
     padding: 30px;
   }
 
   .end-game-modal span {
-    color: #eeda76;
+    color: #02ccba;
     text-transform: uppercase;
     line-height: 1.5em;
     font-size: 1.3em;
@@ -146,13 +149,13 @@ h1 {
   
   .button-area span {
     display: inline-block;
-    background-color: hsla(30, 10%, 20%, 0.95);
+    background-color:#aa7ecd;
+    color:white;
     margin: 0.2em 0.2em 0 0.2em;
   }
   
   .button-area span:hover {
     cursor: pointer;
-    background-color: hsla(30, 10%, 30%, 0.95);
   }
   
   
