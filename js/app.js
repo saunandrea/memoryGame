@@ -19,6 +19,8 @@ let attempts = 0;
 const moves = document.getElementsByClassName("moves")[0];
 let startDate;
 var timer; 
+var minutes;
+var seconds; 
 
 ////////////// >>>>>>>>> timer test
 var startTimer = function(){
@@ -41,13 +43,19 @@ var resetTimer = function(){
 var countdown = function(){
     var now = new Date().getTime();
     var distance =  now - startDate;
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    seconds = Math.floor((distance % (1000 * 60)) / 1000);
     document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 }
 
-
 //////<<<<<<<<<<<<<< timer test
+
+document.getElementById('resetButton').addEventListener('click', function() {
+      document.getElementsByClassName("modal-container")[0].style.display = 'none';
+      resetGame();
+  });
+
+
 
 function setCards(cardArray) {
     let shuffled = shuffle(cardArray);
@@ -99,7 +107,10 @@ function checkifCardsMatch(lastClicked) {
             if (matchCounter == 8) {
                 console.log("you woooonnn!!!!");
                 stopTimer();
-                resetGame();
+              //  resetGame();
+              document.getElementById("finalMoves").innerHTML = attempts;
+              document.getElementById("finalTime").innerHTML = minutes + "m " + seconds + "s ";
+              document.getElementsByClassName('modal-container')[0].style.display = "block";
                 return;
             }
         } else {
